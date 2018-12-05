@@ -15,7 +15,7 @@ Try to build a GAN to generate ACG-style faces. I can pick some out as my SNS av
 Downloaded from the Internet, thanks for the data provider!
 * faces.zip
 
-`faces.zip` is an ACG-style avatar images dataset, collected from a well-known ACG image website [konachan.net](konachan.net)
+`faces.zip` is an ACG-style avatar images dataset, collected from a well-known ACG image website [Konachan](www.konachan.net)
 
 All images in the dataset have been reshaped to appropriate sizes. They are all ACG-style face images.
 
