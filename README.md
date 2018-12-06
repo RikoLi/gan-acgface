@@ -1,8 +1,11 @@
 # A GAN Demo: ACG-Style Faces Generating
+---
 ## Introduction
+---
 Try to build a GAN to generate ACG-style faces. I can pick some out as my SNS avatar, maybe...(if I make it :D)
 
 ## Prerequisite
+---
 ### Codes
 * main.py
 * gan.py
@@ -20,6 +23,7 @@ Downloaded from the Internet, thanks for the data provider!
 All images in the dataset have been reshaped to appropriate sizes. They are all ACG-style face images.
 
 ## Evironment
+---
 ### OS
 * Linux CentOS
 * Windows 10
