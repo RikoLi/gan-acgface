@@ -40,3 +40,11 @@ K40M is from ZJUSPC. Thanks for the authorization of the usage of K40M from ZJUS
 * Keras (version unconfirmed)
 * matplotlab (version unconfirmed)
 * PIL (version unconfirmed)
+
+### References
+Code references: [GAN-Zoo](https://github.com/hindupuravinash/the-gan-zoo)
+
+Paper references: 
+* [Generative Adversarial Nets](https://arxiv.org/abs/1406.2661v1) (arxiv id: 1406.2661v1)
+* [Conditional Generative Adversarial Nets](https://arxiv.org/abs/1411.1784v1) (arxiv id: 1411.1784v1)
+* [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434v2) (arxiv id: 1511.06434v2)
