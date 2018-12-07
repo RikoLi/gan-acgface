@@ -6,10 +6,13 @@ Try to build a GAN to generate ACG-style faces. I can pick some out as my SNS av
 ### Codes
 * main.py
 * gan.py
+* utils.py
 
 `main.py` is for training, predicting process controlling.
 
 `gan.py` is for net construction.
+
+`utils.py` is for other tool functions.
 
 ### Datasets
 Downloaded from the Internet, thanks for the data provider!
@@ -38,7 +41,7 @@ K40M is from ZJUSPC. Thanks for the authorization of the usage of K40M from ZJUS
 * Python 3.6
 * Tensorflow-gpu (version unconfirmed)
 * Keras (version unconfirmed)
-* matplotlab (version unconfirmed)
+* matplotlib (version unconfirmed)
 * PIL (version unconfirmed)
 
 ## References

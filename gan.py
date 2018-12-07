@@ -1,7 +1,7 @@
 # Revised from Github project: hindupuravinash / the-gan-zoo / dcgan
 from __future__ import print_function, division
 
-from keras.datasets import mnist
+# from keras.datasets import mnist
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
 from keras.layers import BatchNormalization, Activation, ZeroPadding2D
 from keras.layers.advanced_activations import LeakyReLU
@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import sys
 
 import numpy as np
+from utils import *
 
 class DCGAN():
     def __init__(self):
@@ -107,7 +108,7 @@ class DCGAN():
     def train(self, epochs, batch_size=128, save_interval=50):
 
         # Load the dataset
-        (X_train, _), (_, _) = mnist.load_data()
+        X_train = loadData('../datasets/acg_faces/')
 
         # Rescale -1 to 1
         X_train = X_train / 127.5 - 1.
