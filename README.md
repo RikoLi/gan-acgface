@@ -41,7 +41,7 @@ K40M is from ZJUSPC. Thanks for the authorization of the usage of K40M from ZJUS
 * matplotlab (version unconfirmed)
 * PIL (version unconfirmed)
 
-### References
+## References
 Code references: [GAN-Zoo](https://github.com/hindupuravinash/the-gan-zoo)
 
 Paper references: 
