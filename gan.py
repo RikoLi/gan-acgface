@@ -55,8 +55,8 @@ class DCGAN():
 
         model = Sequential()
 
-        model.add(Dense(128 * 7 * 7, activation="relu", input_dim=self.latent_dim))
-        model.add(Reshape((7, 7, 128)))
+        model.add(Dense(128 * 24 * 24, activation="relu", input_dim=self.latent_dim))
+        model.add(Reshape((24, 24, 128)))
         model.add(UpSampling2D())
         model.add(Conv2D(128, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
@@ -157,7 +157,8 @@ class DCGAN():
         gen_imgs = self.generator.predict(noise)
 
         # Rescale images 0 - 1
-        gen_imgs = 0.5 * gen_imgs + 0.5
+        # gen_imgs = 0.5 * gen_imgs + 0.5
+        gen_imgs = (gen_imgs + 1) * 127.5
 
         fig, axs = plt.subplots(r, c)
         cnt = 0
