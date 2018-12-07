@@ -15,7 +15,6 @@ def loadData(path):
     # Import real images
     for item in img_name_list:
         img = pyplot.imread(path+item)
-        img = img.reshape(1, -1)
         img_list.append(img)
         counter += 1
         per = float((counter / len(img_name_list))*100)
