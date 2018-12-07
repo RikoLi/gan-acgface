@@ -3,11 +3,11 @@ from __future__ import print_function, division
 
 # from keras.datasets import mnist
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
-from keras.layers import BatchNormalization, Activation, ZeroPadding2D
+from keras.layers import BatchNormalization, Activation, ZeroPadding2D, GaussianNoise
 from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.convolutional import UpSampling2D, Conv2D
 from keras.models import Sequential, Model
-from keras.optimizers import Adam
+from keras.optimizers import Adam, SGD
 
 import matplotlib.pyplot as plt
 
@@ -23,7 +23,7 @@ class DCGAN():
         self.img_cols = 96
         self.channels = 3
         self.img_shape = (self.img_rows, self.img_cols, self.channels)
-        self.latent_dim = 100
+        self.latent_dim = 150
 
         optimizer = Adam(0.0002, 0.5)
 
@@ -55,16 +55,30 @@ class DCGAN():
 
         model = Sequential()
 
-        model.add(Dense(128 * 24 * 24, activation="relu", input_dim=self.latent_dim))
+        model.add(Dense(128 * 24 * 24, input_dim=self.latent_dim))
+        model.add(GaussianNoise(stddev=1))
+        # model.add(Activation("relu"))
+        model.add(LeakyReLU(alpha=0.2))
         model.add(Reshape((24, 24, 128)))
         model.add(UpSampling2D())
+        model.add(GaussianNoise(stddev=1))
         model.add(Conv2D(128, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
-        model.add(Activation("relu"))
+        # model.add(Activation("relu"))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(GaussianNoise(stddev=1))
+        model.add(Dropout(0.5))
+        model.add(Conv2D(128, kernel_size=3, padding="same"))
+        model.add(BatchNormalization(momentum=0.8))
+        # model.add(Activation("relu"))
+        model.add(LeakyReLU(alpha=0.2))
         model.add(UpSampling2D())
+        model.add(GaussianNoise(stddev=1))
+        model.add(Dropout(0.5))
         model.add(Conv2D(64, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
-        model.add(Activation("relu"))
+        # model.add(Activation("relu"))
+        model.add(LeakyReLU(alpha=0.2))
         model.add(Conv2D(self.channels, kernel_size=3, padding="same"))
         model.add(Activation("tanh"))
 
@@ -115,8 +129,10 @@ class DCGAN():
         # X_train = np.expand_dims(X_train, axis=3)
 
         # Adversarial ground truths
-        valid = np.ones((batch_size, 1))
-        fake = np.zeros((batch_size, 1))
+        # valid = np.ones((batch_size, 1))
+        # fake = np.zeros((batch_size, 1))
+        valid = np.random.rand(batch_size, 1) * 0.5 + 0.7   # To range (0.7, 1.2)
+        fake = np.random.rand(batch_size, 1) * 0.3          # To range (0, 0.3)
 
         for epoch in range(epochs):
 
@@ -127,6 +143,7 @@ class DCGAN():
             # Select a random half of images
             idx = np.random.randint(0, X_train.shape[0], batch_size)
             imgs = X_train[idx]
+        
 
             # Sample noise and generate a batch of new images
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
@@ -150,6 +167,8 @@ class DCGAN():
             # If at save interval => save generated image samples
             if epoch % save_interval == 0:
                 self.save_imgs(epoch)
+                self.discriminator.save('../models/discriminator.h5')
+                self.generator.save('../models/generator.h5')
 
     def save_imgs(self, epoch):
         r, c = 5, 5
@@ -158,15 +177,16 @@ class DCGAN():
 
         # Rescale images 0 - 1
         # gen_imgs = 0.5 * gen_imgs + 0.5
-        gen_imgs = (gen_imgs + 1) * 127.5
+        gen_imgs = (gen_imgs + 1) / 2 * 255
+        gen_imgs = gen_imgs.astype(np.uint8)
 
         fig, axs = plt.subplots(r, c)
         cnt = 0
         for i in range(r):
             for j in range(c):
-                axs[i,j].imshow(gen_imgs[cnt, :,:,0])
+                axs[i,j].imshow(gen_imgs[cnt,:,:,:])
                 axs[i,j].axis('off')
                 cnt += 1
         fig.savefig("images/acgface_%d.png" % epoch)
         plt.close()
-
+    
