@@ -54,4 +54,4 @@ Here are some generated avatars. I used a 300-d noise as input and trained for 4
 
 ![14](example/14.png "No.14") ![72](example/72.png "No.72") ![77](example/77.png "No.77") ![216](example/216.png "No.216") ![221](example/221.png "No.221") ![238](example/238.png "No.238") ![239](example/239.png "No.239") ![249](example/249.png "No.249") ![250](example/250.png "No.250") ![258](example/258.png "No.258") ![260](example/260.png "No.260") ![276](example/276.png "No.276") ![277](example/277.png "No.277")
 
-As you can see, the quality of these avatars are not good enough. In fact, for most of the generated images you can only recognize blurry faces so I just picked out some well-performed results. It is hard but worth to improve the model's performance.
+As you can see, the quality of these avatars is not good enough. In fact, for most of the generated images you can only recognize blurry faces so I just picked out some well-performed results. It is hard but worth to improve the model's performance.
