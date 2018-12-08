@@ -23,7 +23,7 @@ class DCGAN():
         self.img_cols = 96
         self.channels = 3
         self.img_shape = (self.img_rows, self.img_cols, self.channels)
-        self.latent_dim = 150
+        self.latent_dim = 300
 
         optimizer = Adam(0.0002, 0.5)
 
@@ -65,14 +65,14 @@ class DCGAN():
         model.add(BatchNormalization(momentum=0.8))
         # model.add(Activation("relu"))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dropout(0.2))
+        model.add(Dropout(0.1))
         model.add(Conv2D(128, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         # model.add(Activation("relu"))
         model.add(LeakyReLU(alpha=0.2))
         model.add(UpSampling2D())
-        model.add(Dropout(0.2))
-        model.add(Conv2D(64, kernel_size=3, padding="same"))
+        model.add(Dropout(0.1))
+        model.add(Conv2D(128, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         # model.add(Activation("relu"))
         model.add(LeakyReLU(alpha=0.2))
@@ -92,16 +92,16 @@ class DCGAN():
 
         model.add(Conv2D(32, kernel_size=3, strides=2, input_shape=self.img_shape, padding="same"))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dropout(0.25))
+        model.add(Dropout(0.5))
         model.add(Conv2D(64, kernel_size=3, strides=2, padding="same"))
         model.add(ZeroPadding2D(padding=((0,1),(0,1))))
         model.add(BatchNormalization(momentum=0.8))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dropout(0.25))
+        model.add(Dropout(0.5))
         model.add(Conv2D(128, kernel_size=3, strides=2, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dropout(0.25))
+        model.add(Dropout(0.5))
         model.add(Conv2D(256, kernel_size=3, strides=1, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         model.add(LeakyReLU(alpha=0.2))
@@ -126,10 +126,10 @@ class DCGAN():
         # X_train = np.expand_dims(X_train, axis=3)
 
         # Adversarial ground truths
-        # valid = np.ones((batch_size, 1))
-        # fake = np.zeros((batch_size, 1))
-        valid = np.random.rand(batch_size, 1) * 0.5 + 0.7   # To range (0.7, 1.2)
-        fake = np.random.rand(batch_size, 1) * 0.3          # To range (0, 0.3)
+        valid = np.ones((batch_size, 1))
+        fake = np.zeros((batch_size, 1))
+        # valid = np.random.rand(batch_size, 1) * 0.5 + 0.7   # To range (0.7, 1.2)
+        # fake = np.random.rand(batch_size, 1) * 0.3          # To range (0, 0.3)
 
         for epoch in range(epochs):
 
