@@ -60,7 +60,7 @@ class DCGAN():
         model.add(LeakyReLU(alpha=0.2))
         model.add(Reshape((24, 24, 128)))
         model.add(UpSampling2D())
-        model.add(GaussianNoise(stddev=1))
+        # model.add(GaussianNoise(stddev=1))
         model.add(Conv2D(128, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         # model.add(Activation("relu"))
