@@ -6,11 +6,11 @@ from keras.utils import *
 import numpy as np
 
 # Predict
-batch_size = 20
-generator = load_model('../models/12.7/generator.h5')
+batch_size = 50
+generator = load_model('../models/12.12/generator2.h5')
 
 for i in range(batch_size):
-    noise = np.random.normal(0, 1, (1,300))
+    noise = np.random.normal(0, 1, (1,100))
     img = generator.predict(noise)
     img = (img + 1) / 2 * 255
     img = img.astype(np.uint8)

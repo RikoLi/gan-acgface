@@ -8,6 +8,8 @@ from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.convolutional import UpSampling2D, Conv2D
 from keras.models import Sequential, Model
 from keras.optimizers import Adam, SGD
+from keras import backend as K
+
 
 import matplotlib.pyplot as plt
 
@@ -19,17 +21,21 @@ from utils import *
 class DCGAN():
     def __init__(self):
         # Input shape
-        self.img_rows = 96
-        self.img_cols = 96
+        self.img_rows = 256
+        self.img_cols = 256
         self.channels = 3
         self.img_shape = (self.img_rows, self.img_cols, self.channels)
         self.latent_dim = 300
 
         optimizer = Adam(0.0002, 0.5)
 
+        
+
         # Build and compile the discriminator
         self.discriminator = self.build_discriminator()
-        self.discriminator.compile(loss='binary_crossentropy',
+        self.discriminator.compile(
+            # loss='binary_crossentropy',
+            loss=self.disLoss,
             optimizer=optimizer,
             metrics=['accuracy'])
 
@@ -50,6 +56,16 @@ class DCGAN():
         # Trains the generator to fool the discriminator
         self.combined = Model(z, valid)
         self.combined.compile(loss='binary_crossentropy', optimizer=optimizer)
+    
+    # Define D loss
+    def disLoss(self, y_true, y_pred):
+        dis_loss = -1.0 * (K.log(y_true) + K.log(1.0 - y_pred))
+        return K.mean(dis_loss, axis=-1)
+
+    # Define G loss
+    def genLoss(self, y_true, y_pred):
+        gen_loss = -1.0 * K.log()
+        return K.mean(gen_loss, axis=-1)
 
     def build_generator(self):
 
@@ -156,6 +172,7 @@ class DCGAN():
             # ---------------------
 
             # Train the generator (wants discriminator to mistake images as real)
+            
             g_loss = self.combined.train_on_batch(noise, valid)
 
             # Plot the progress

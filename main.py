@@ -8,5 +8,5 @@ import numpy as np
 
 # Train
 dcgan = DCGAN()
-dcgan.train(epochs=40000, batch_size=64, save_interval=50)
+dcgan.train(epochs=50000, batch_size=16, save_interval=50)
 
