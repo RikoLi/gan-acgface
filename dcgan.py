@@ -1,5 +1,4 @@
 # DCGAN model
-# from keras.datasets import mnist
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
 from keras.layers import BatchNormalization, Activation, ZeroPadding2D, GaussianNoise
 from keras.layers.advanced_activations import LeakyReLU
@@ -7,22 +6,27 @@ from keras.layers.convolutional import UpSampling2D, Conv2D
 from keras.models import Sequential, Model
 from keras.optimizers import Adam, SGD
 from keras import backend as K
+from keras.models import load_model
 
 import matplotlib.pyplot as plt
-
 import sys
-
 import numpy as np
+
 from utils import *
 from nets import *
 
 # Set training parameters
 iterations = 50000
 save_interval = 50
+
+isLoadModel = False
+model_path = {'d': '../models/discrimator.h5', 'g': '../models/generator.h5'}
+
 batch_size = 16
-channels = 3
 img_width = img_height = 256
+channels = 3
 noise_dim = 100
+
 img_shape = (img_height, img_width, channels)
 optimizer = Adam(0.0002, 0.5)
 
@@ -32,13 +36,25 @@ X_train = loadData('../datasets/acg_faces/')
 X_train = X_train / 127.5 - 1.
 
 # Build nets
-# Generator
-generator = makeG(noise_dim=noise_dim, channels=channels)
-generator.compile(optimizer=optimizer, loss=G_loss)
+if isLoadModel:
+    discriminator = load_model(model_path['d'], compile=False)
+    discriminator.compile(optimizer=optimizer, loss='binary_crossentropy')
+    generator = load_model(model_path['g'], compile=False)
+else:
+    # Build discriminator
+    discriminator = makeD(img_shape=img_shape)
+    discriminator.compile(optimizer=optimizer, loss='binary_crossentropy')
+    # Build generator
+    generator = makeG(noise_dim=noise_dim, channels=channels)
 
-# Discriminator
-discriminator = makeD(img_shape=img_shape)
-discriminator.compile(optimizer=optimizer, loss=D_loss)
+# Define the routine of the tensors
+input_noise = Input(shape=(noise_dim,))
+img = generator(input_noise)
+discriminator.trainable = False
+d_out = discriminator(img)
+# Build G+D combined model
+combined = Model(inputs=input_noise, outputs=d_out)
+combined.compile(optimizer=optimizer, loss='binary_crossentropy')
 
 # Training
 for iteration in range(iterations):
@@ -59,7 +75,7 @@ for iteration in range(iterations):
     
     #### Train the generator
     labels_placeholder = np.ones((batch_size, 1))
-    g_loss = generator.train_on_batch(noise, labels_placeholder)
+    g_loss = combined.train_on_batch(noise, labels_placeholder)
 
     #### Training process data saving & displaying
     # Display loss

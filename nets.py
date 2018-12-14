@@ -78,3 +78,8 @@ def makeD(img_shape):
     D.summary()
     
     return D
+
+# GAN loss
+def D_loss(y_true, y_pred):
+    res = -1.0 * K.log(y_pred)
+    return res

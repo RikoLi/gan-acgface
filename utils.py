@@ -59,12 +59,3 @@ def save_imgs(epoch, noise_dim, which_generator):
             cnt += 1
     fig.savefig("images/iteration_%d.png" % epoch)
     pyplot.close()
-
-# GAN loss
-def D_loss(y_real, y_pred):
-
-    return
-
-def G_loss(y_real, y_pred):
-
-    return
