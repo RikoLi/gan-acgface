@@ -33,7 +33,7 @@ def resizeImg(from_path, save_path, size):
         new_img = new_img.resize((size,size), Image.ANTIALIAS)
         new_img.save(save_path+'_'+str(size)+'.jpg', 'jpeg', quality=95)
 
-resizeImg('../datasets/hqfaces/', '../datasets/112_hqfaces/', 112)
+# resizeImg('../datasets/hqfaces/', '../datasets/112_hqfaces/', 112)
 
 # Batch rename
 def dataRename(path, new_name):

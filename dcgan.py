@@ -20,7 +20,7 @@ iterations = 50000
 save_interval = 50
 
 isLoadModel = False
-model_path = {'d': '../models/discrimator.h5', 'g': '../models/generator.h5'}
+model_path = {'d': '../models/discriminator.h5', 'g': '../models/generator.h5'}
 
 batch_size = 16
 img_width = img_height = 256
@@ -38,12 +38,12 @@ X_train = X_train / 127.5 - 1.
 # Build nets
 if isLoadModel:
     discriminator = load_model(model_path['d'], compile=False)
-    discriminator.compile(optimizer=optimizer, loss='binary_crossentropy')
+    discriminator.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
     generator = load_model(model_path['g'], compile=False)
 else:
     # Build discriminator
     discriminator = makeD(img_shape=img_shape)
-    discriminator.compile(optimizer=optimizer, loss='binary_crossentropy')
+    discriminator.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
     # Build generator
     generator = makeG(noise_dim=noise_dim, channels=channels)
 
@@ -79,7 +79,7 @@ for iteration in range(iterations):
 
     #### Training process data saving & displaying
     # Display loss
-    d_loss = np.add(d_real_loss, d_fake_loss)
+    d_loss = 0.5 * np.add(d_real_loss, d_fake_loss)
     print("Iteration: %d [D loss: %f, acc.: %.2f%%]" % (iteration, d_loss[0], 100*d_loss[1]))
 
     # If at save interval => save generated image samples
