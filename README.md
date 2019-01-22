@@ -29,7 +29,7 @@ Downloaded from the Internet, thanks for the data provider!
 
 All images in the dataset have been reshaped to appropriate sizes. They are all ACG-style face images.
 
-## Evironment
+## Environment
 ### OS
 * Linux CentOS
 * Windows 10
