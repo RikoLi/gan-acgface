@@ -7,7 +7,7 @@ import numpy as np
 
 # Predict
 batch_size = 50
-generator = load_model('../models/12.12/generator2.h5')
+generator = load_model('../gan_models/12.12/generator.h5')
 
 for i in range(batch_size):
     noise = np.random.normal(0, 1, (1,100))

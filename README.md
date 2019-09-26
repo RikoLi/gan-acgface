@@ -42,7 +42,7 @@ Datasets are not uploaded.
 * Linux CentOS
 * Windows 10
 
-The linux mainly serves as training platform. Win10 is for coding.
+The linux mainly serves as training platform. Windows is for coding.
 
 ### GPU
 * Nvidia Tesla K40M
