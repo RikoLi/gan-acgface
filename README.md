@@ -37,7 +37,7 @@ Datasets are not uploaded.
 
 `hqface.zip` is also collected from Konachan, but contains images with higher quality.
 
-## Evironment
+## Environment
 ### OS
 * Linux CentOS
 * Windows 10
